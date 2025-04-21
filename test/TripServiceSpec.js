@@ -40,8 +40,8 @@ describe('TripService', () => {
     });
 
     it('should return trips if logged user is a friend', () => {
-        const trip1 = { id: 1, destination: "Rome" };
-        const trip2 = { id: 2, destination: "Paris" };
+        const trip1 = { id: 1, destination: "Rome", tag: "public" };
+        const trip2 = { id: 2, destination: "Paris", tag: "public" };
         const expectedTrips = [trip1, trip2];
 
         const loggedUser = new User();
@@ -54,6 +54,7 @@ describe('TripService', () => {
 
         expect(result).to.deep.equal(expectedTrips);
     });
+
 
     it("should only return trips with tag 'public' when user is a friend", () => {
         const trip1 = { id: 1, destination: "Rome", tag: "public" };
