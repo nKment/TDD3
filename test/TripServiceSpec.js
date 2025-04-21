@@ -38,4 +38,21 @@ describe('TripService', () => {
         expect(result).to.be.an('array').that.is.empty;
         expect(tripDAOSpy.notCalled).to.be.true; // DAO darf NICHT aufgerufen werden!
     });
+
+    it('should return trips if logged user is a friend', () => {
+        const trip1 = { id: 1, destination: "Rome" };
+        const trip2 = { id: 2, destination: "Paris" };
+        const expectedTrips = [trip1, trip2];
+
+        const loggedUser = new User();
+        const requestedUser = new User([loggedUser]); // loggedUser ist Freund
+
+        sinon.stub(UserSession, 'getLoggedUser').returns(loggedUser);
+        sinon.stub(TripDAO, 'findTripsByUser').returns(expectedTrips);
+
+        const result = tripService.getTripsByUser(requestedUser);
+
+        expect(result).to.deep.equal(expectedTrips);
+    });
+
 });
