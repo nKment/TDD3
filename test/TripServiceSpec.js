@@ -55,4 +55,22 @@ describe('TripService', () => {
         expect(result).to.deep.equal(expectedTrips);
     });
 
+    it("should only return trips with tag 'public' when user is a friend", () => {
+        const trip1 = { id: 1, destination: "Rome", tag: "public" };
+        const trip2 = { id: 2, destination: "Paris", tag: "private" };
+        const trip3 = { id: 3, destination: "Berlin", tag: "public" };
+
+        const allTrips = [trip1, trip2, trip3];
+        const expectedTrips = [trip1, trip3];
+
+        const loggedUser = new User();
+        const requestedUser = new User([loggedUser]);
+
+        sinon.stub(UserSession, "getLoggedUser").returns(loggedUser);
+        sinon.stub(TripDAO, "findTripsByUser").returns(allTrips);
+
+        const result = tripService.getTripsByUser(requestedUser);
+
+        expect(result).to.deep.equal(expectedTrips); // <- Test will FAIL, because allTrips is returned
+    });
 });
