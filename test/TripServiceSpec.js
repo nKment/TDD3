@@ -55,7 +55,6 @@ describe('TripService', () => {
         expect(result).to.deep.equal(expectedTrips);
     });
 
-
     it("should only return trips with tag 'public' when user is a friend", () => {
         const trip1 = { id: 1, destination: "Rome", tag: "public" };
         const trip2 = { id: 2, destination: "Paris", tag: "private" };

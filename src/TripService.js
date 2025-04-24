@@ -19,5 +19,4 @@ class TripService {
             .filter(trip => trip.tag === 'public');
     }
 }
-
 export default TripService;
